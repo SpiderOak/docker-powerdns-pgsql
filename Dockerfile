@@ -1,6 +1,7 @@
 FROM ubuntu:xenial
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    dnsutils \
     pdns-backend-pgsql \
     pdns-recursor \
     pdns-server \
