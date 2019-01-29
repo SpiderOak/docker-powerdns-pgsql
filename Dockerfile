@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM ubuntu:xenial
+FROM ubuntu:18.04
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     dnsutils \
@@ -22,12 +22,13 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     runit \
 && rm -rf /var/lib/apt/lists/* \
 && rm \
-    /etc/powerdns/bindbackend.conf \
-    /etc/powerdns/pdns.d/pdns.local.conf \
-    /etc/powerdns/pdns.d/pdns.simplebind.conf \
+    /etc/powerdns/pdns.d/bind.conf \
+    /etc/powerdns/named.conf \
 && true
 
 COPY etc/ /etc/
+COPY usr/sbin /usr/sbin
+RUN chmod 755 /usr/sbin/runsvdir-start
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
